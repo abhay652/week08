@@ -153,12 +153,6 @@ jobs:
         run: |
           az acr login --name ${{ vars.ACR_NAME }}
 
-      - name: DEBUG print vars
-        run: |
-          echo "ACR_LOGIN_SERVER=[${{ vars.ACR_LOGIN_SERVER }}]"
-          echo "image=[${{ matrix.image }}]"
-          echo "service=[${{ matrix.service }}]"
-          echo "sha=[${{ github.sha }}]"
       - name: Build Docker image
         run: docker build --platform linux/amd64 -t ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }} ./${{ matrix.service }}
 
