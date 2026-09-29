@@ -154,11 +154,7 @@ jobs:
           az acr login --name ${{ vars.ACR_NAME }}
 
       - name: Build Docker image
-        run: |
-          docker build \
-            --platform linux/amd64 \
-            -t ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }} \
-            ./${{ matrix.service }}
+        run: docker build --platform linux/amd64 -t ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }} ./${{ matrix.service }}
 
       # ---------------------------------------------------------------
       # SECURITY SCANNING (Docker Scout) — runs AFTER build, BEFORE push
@@ -180,6 +176,4 @@ jobs:
       
 
       - name: Push Docker image with commit SHA
-        run: |
-          docker push \
-            ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }}
+        run: docker push ${{ vars.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }}
